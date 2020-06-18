@@ -1,6 +1,7 @@
 package com.algaworks.osworks.domain.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.Objects;
 
 @Entity
@@ -10,8 +11,17 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Size(max = 60)
     private String nome;
+
+    @NotBlank
+    @Email
+    @Size(max = 255)
     private String email;
+
+    @NotBlank
+    @Size(max = 20)
     private String telefone;
 
     public Long getId() {
