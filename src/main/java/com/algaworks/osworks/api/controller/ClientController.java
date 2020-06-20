@@ -2,6 +2,7 @@ package com.algaworks.osworks.api.controller;
 
 import com.algaworks.osworks.domain.model.Cliente;
 import com.algaworks.osworks.domain.repository.ClienteRepository;
+import com.algaworks.osworks.domain.service.CrudClienteService;
 import com.mysql.cj.xdevapi.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,9 @@ public class ClientController {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private CrudClienteService crudClienteService;
+
     @GetMapping
     public List<Cliente> listar() {
         return clienteRepository.findAll();
@@ -40,7 +44,7 @@ public class ClientController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente adicionar(@Valid @RequestBody Cliente cliente) {
-        return clienteRepository.save(cliente);
+        return crudClienteService.salvar(cliente);
     }
 
     @PutMapping("/{clienteId}")
@@ -50,7 +54,7 @@ public class ClientController {
         }
 
         cliente.setId(clienteId);
-        cliente = clienteRepository.save(cliente);
+        cliente = crudClienteService.salvar(cliente);
         return ResponseEntity.ok(cliente);
     }
 
@@ -59,7 +63,7 @@ public class ClientController {
         if (!clienteRepository.existsById(clienteId)) {
             return ResponseEntity.notFound().build();
         }
-        clienteRepository.deleteById(clienteId);
+        crudClienteService.excluir(clienteId);
         return ResponseEntity.noContent().build();
     }
 }
