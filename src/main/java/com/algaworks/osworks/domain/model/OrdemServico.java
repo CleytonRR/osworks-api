@@ -1,16 +1,7 @@
 package com.algaworks.osworks.domain.model;
 
-import com.algaworks.osworks.ValidationGroups;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.groups.ConvertGroup;
-import javax.validation.groups.Default;
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
@@ -21,26 +12,18 @@ public class OrdemServico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Valid
-    @ConvertGroup(from = Default.class, to = ValidationGroups.ClientId.class)
-    @NotNull
     @ManyToOne
     private Cliente cliente;
 
-    @NotNull
     private String descricao;
 
-    @NotNull
     private BigDecimal preco;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Enumerated(EnumType.STRING)
     private StatusOrderServico status;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private OffsetDateTime dataAbertura;
 
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private OffsetDateTime dataFechamento;
 
     public Long getId() {
