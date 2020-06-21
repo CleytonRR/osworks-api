@@ -3,6 +3,7 @@ package com.algaworks.osworks.domain.service;
 import com.algaworks.osworks.api.exceptionhandler.ExceptionCustom;
 import com.algaworks.osworks.api.model.Comentario;
 import com.algaworks.osworks.domain.exceptions.DomainException;
+import com.algaworks.osworks.domain.exceptions.EntityNotFoundException;
 import com.algaworks.osworks.domain.model.Cliente;
 import com.algaworks.osworks.domain.model.OrdemServico;
 import com.algaworks.osworks.domain.model.StatusOrderServico;
@@ -39,7 +40,7 @@ public class CrudOrderService {
 
     public Comentario adicionarComentario(Long ordemServicoId, String descricao) {
         OrdemServico ordemServico = ordemServicoRepository.findById(ordemServicoId)
-                .orElseThrow(() -> new DomainException("Ordem de serviço não encontrada."));
+                .orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada."));
 
         Comentario comentario = new Comentario();
         comentario.setDataEnvio(OffsetDateTime.now());

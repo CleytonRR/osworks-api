@@ -1,6 +1,7 @@
 package com.algaworks.osworks.api.exceptionhandler;
 
 import com.algaworks.osworks.domain.exceptions.DomainException;
+import com.algaworks.osworks.domain.exceptions.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -28,6 +29,17 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(DomainException.class)
     public ResponseEntity<?> handleDomainException(DomainException ex, WebRequest webRequest) {
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+        ExceptionCustom exceptionCustom = new ExceptionCustom();
+        exceptionCustom.setStatus(httpStatus.value());
+        exceptionCustom.setTitulo(ex.getMessage());
+        exceptionCustom.setLocalDateTime(OffsetDateTime.now());
+
+        return handleExceptionInternal(ex, exceptionCustom, new HttpHeaders(), httpStatus, webRequest);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<?> handleEntityNotFound(DomainException ex, WebRequest webRequest) {
+        HttpStatus httpStatus = HttpStatus.NOT_FOUND;
         ExceptionCustom exceptionCustom = new ExceptionCustom();
         exceptionCustom.setStatus(httpStatus.value());
         exceptionCustom.setTitulo(ex.getMessage());
