@@ -1,5 +1,7 @@
 package com.algaworks.osworks.domain.model;
 
+import com.algaworks.osworks.ValidationGroups;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Objects;
@@ -7,6 +9,7 @@ import java.util.Objects;
 @Entity
 public class Cliente {
 
+    @NotNull(groups = ValidationGroups.ClientId.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
