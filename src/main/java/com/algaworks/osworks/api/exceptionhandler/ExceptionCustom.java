@@ -3,12 +3,13 @@ package com.algaworks.osworks.api.exceptionhandler;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ExceptionCustom {
     private Integer status;
-    private LocalDateTime localDateTime;
+    private OffsetDateTime localDateTime;
     private String titulo;
     private List<Campo> campos;
 
@@ -46,11 +47,11 @@ public class ExceptionCustom {
         this.status = status;
     }
 
-    public LocalDateTime getLocalDateTime() {
+    public OffsetDateTime getLocalDateTime() {
         return localDateTime;
     }
 
-    public void setLocalDateTime(LocalDateTime localDateTime) {
+    public void setLocalDateTime(OffsetDateTime localDateTime) {
         this.localDateTime = localDateTime;
     }
 

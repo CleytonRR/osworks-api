@@ -1,6 +1,5 @@
 package com.algaworks.osworks.domain.service;
 
-import com.algaworks.osworks.api.exceptionhandler.ExceptionCustom;
 import com.algaworks.osworks.domain.exceptions.DomainException;
 import com.algaworks.osworks.domain.model.Cliente;
 import com.algaworks.osworks.domain.model.OrdemServico;
@@ -10,7 +9,7 @@ import com.algaworks.osworks.domain.repository.OrdemServicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Service
 public class CrudOrderService {
@@ -28,7 +27,7 @@ public class CrudOrderService {
 
         ordemServico.setCliente(cliente);
         ordemServico.setStatus(StatusOrderServico.ABERTA);
-        ordemServico.setDataAbertura(LocalDateTime.now());
+        ordemServico.setDataAbertura(OffsetDateTime.now());
         return ordemServicoRepository.save(ordemServico);
     }
 }
