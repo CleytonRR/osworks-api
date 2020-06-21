@@ -8,7 +8,7 @@ import java.time.OffsetDateTime;
 public class OrdemServicoModel {
 
     private Long id;
-    private String nomeCliente;
+    private ClienteResumoModel cliente;
     private String descricao;
     private BigDecimal preco;
     private StatusOrderServico status;
@@ -24,12 +24,12 @@ public class OrdemServicoModel {
         this.id = id;
     }
 
-    public String getNomeCliente() {
-        return nomeCliente;
+    public ClienteResumoModel getCliente() {
+        return cliente;
     }
 
-    public void setNomeCliente(String nomeClient) {
-        this.nomeCliente = nomeClient;
+    public void setCliente(ClienteResumoModel cliente) {
+        this.cliente = cliente;
     }
 
     public String getDescricao() {
