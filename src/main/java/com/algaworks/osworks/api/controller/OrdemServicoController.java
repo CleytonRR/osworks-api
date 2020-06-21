@@ -1,5 +1,6 @@
 package com.algaworks.osworks.api.controller;
 
+import com.algaworks.osworks.api.model.OrdemServicoInput;
 import com.algaworks.osworks.api.model.OrdemServicoModel;
 import com.algaworks.osworks.domain.model.OrdemServico;
 import com.algaworks.osworks.domain.repository.OrdemServicoRepository;
@@ -29,7 +30,8 @@ public class OrdemServicoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public OrdemServicoModel criar(@Valid @RequestBody OrdemServico ordemServico) {
+    public OrdemServicoModel criar(@Valid @RequestBody OrdemServicoInput ordemServicoInput) {
+        OrdemServico ordemServico = this.toEntity(ordemServicoInput);
         return this.toModel(crudOrderService.create(ordemServico));
     }
 
@@ -57,5 +59,9 @@ public class OrdemServicoController {
         return ordemServicos.stream()
                 .map(item -> this.toModel(item))
                 .collect(Collectors.toList());
+    }
+
+    private OrdemServico toEntity(OrdemServicoInput ordemServicoInput) {
+        return modelMapper.map(ordemServicoInput, OrdemServico.class);
     }
 }
