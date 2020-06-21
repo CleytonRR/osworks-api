@@ -1,6 +1,7 @@
 package com.algaworks.osworks.domain.model;
 
 import com.algaworks.osworks.api.model.Comentario;
+import com.algaworks.osworks.domain.exceptions.DomainException;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -108,5 +109,22 @@ public class OrdemServico {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public boolean canFinished() {
+        return StatusOrderServico.ABERTA.equals(getStatus());
+    }
+
+    public boolean notCanFinished() {
+        return !canFinished();
+    }
+
+    public void finalizar() {
+        if (notCanFinished()) {
+            throw new DomainException("Ordem não pode ser finalizada");
+        }
+
+        setStatus(StatusOrderServico.FINALIZADA);
+        setDataFechamento(OffsetDateTime.now());
     }
 }

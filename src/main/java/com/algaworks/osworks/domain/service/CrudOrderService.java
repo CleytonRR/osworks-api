@@ -38,9 +38,15 @@ public class CrudOrderService {
         return ordemServicoRepository.save(ordemServico);
     }
 
+    public void finalizar(Long ordemServiceId) {
+        OrdemServico ordemServico = getOrdemServico(ordemServiceId);
+        ordemServico.finalizar();
+
+        ordemServicoRepository.save(ordemServico);
+    }
+
     public Comentario adicionarComentario(Long ordemServicoId, String descricao) {
-        OrdemServico ordemServico = ordemServicoRepository.findById(ordemServicoId)
-                .orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada."));
+        OrdemServico ordemServico = getOrdemServico(ordemServicoId);
 
         Comentario comentario = new Comentario();
         comentario.setDataEnvio(OffsetDateTime.now());
@@ -48,5 +54,10 @@ public class CrudOrderService {
         comentario.setOrdemServico(ordemServico);
 
         return comentarioRepository.save(comentario);
+    }
+
+    private OrdemServico getOrdemServico(Long ordemServiceId) {
+        return ordemServicoRepository.findById(ordemServiceId)
+                .orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada."));
     }
 }
