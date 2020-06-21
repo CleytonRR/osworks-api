@@ -1,8 +1,12 @@
 package com.algaworks.osworks.domain.service;
 
-import com.algaworks.osworks.domain.model.OrderService;
+import com.algaworks.osworks.api.exceptionhandler.ExceptionCustom;
+import com.algaworks.osworks.domain.exceptions.DomainException;
+import com.algaworks.osworks.domain.model.Cliente;
+import com.algaworks.osworks.domain.model.OrdemServico;
 import com.algaworks.osworks.domain.model.StatusOrderServico;
-import com.algaworks.osworks.domain.repository.OrderServiceRepository;
+import com.algaworks.osworks.domain.repository.ClienteRepository;
+import com.algaworks.osworks.domain.repository.OrdemServicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +16,19 @@ import java.time.LocalDateTime;
 public class CrudOrderService {
 
     @Autowired
-    private OrderServiceRepository orderServiceRepository;
-    public OrderService create(OrderService orderService) {
-        orderService.setStatus(StatusOrderServico.ABERTA);
-        orderService.setDataAbertura(LocalDateTime.now());
-        return orderServiceRepository.save(orderService);
+    private OrdemServicoRepository ordemServicoRepository;
+
+    @Autowired
+    private ClienteRepository clienteRepository;
+
+    public OrdemServico create(OrdemServico ordemServico) {
+
+        Cliente cliente = clienteRepository.findById(ordemServico.getCliente().getId())
+                .orElseThrow(() -> new DomainException("Cliente não encontrado"));
+
+        ordemServico.setCliente(cliente);
+        ordemServico.setStatus(StatusOrderServico.ABERTA);
+        ordemServico.setDataAbertura(LocalDateTime.now());
+        return ordemServicoRepository.save(ordemServico);
     }
 }

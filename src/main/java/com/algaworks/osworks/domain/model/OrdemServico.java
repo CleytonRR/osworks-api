@@ -1,28 +1,40 @@
 package com.algaworks.osworks.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-public class OrderService {
+public class OrdemServico {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @ManyToOne
     private Cliente cliente;
 
+    @NotNull
+    private String descricao;
 
+    @NotNull
     private BigDecimal preco;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Enumerated(EnumType.STRING)
     private StatusOrderServico status;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime dataAbertura;
-    private LocalDateTime dataFinalizacao;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private LocalDateTime dataFechamento;
 
     public Long getId() {
         return id;
@@ -64,19 +76,27 @@ public class OrderService {
         this.dataAbertura = dataAbertura;
     }
 
-    public LocalDateTime getDataFinalizacao() {
-        return dataFinalizacao;
+    public LocalDateTime getDataFechamento() {
+        return dataFechamento;
     }
 
-    public void setDataFinalizacao(LocalDateTime dataFinalizacao) {
-        this.dataFinalizacao = dataFinalizacao;
+    public void setDataFechamento(LocalDateTime dataFechamento) {
+        this.dataFechamento = dataFechamento;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrderService that = (OrderService) o;
+        OrdemServico that = (OrdemServico) o;
         return Objects.equals(id, that.id);
     }
 
