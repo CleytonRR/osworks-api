@@ -1,8 +1,12 @@
 package com.algaworks.osworks.domain.model;
 
+import com.algaworks.osworks.api.model.Comentario;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -25,6 +29,9 @@ public class OrdemServico {
     private OffsetDateTime dataAbertura;
 
     private OffsetDateTime dataFechamento;
+
+    @OneToMany(mappedBy = "ordemServico")
+    private List<Comentario> comentarios = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -80,6 +87,14 @@ public class OrdemServico {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public List<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(List<Comentario> comentarios) {
+        this.comentarios = comentarios;
     }
 
     @Override
